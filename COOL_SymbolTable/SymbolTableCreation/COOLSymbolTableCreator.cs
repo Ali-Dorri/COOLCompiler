@@ -3,23 +3,24 @@ using Antlr4.Runtime.Misc;
 using System;
 using System.Collections.Generic;
 
-namespace COOL_Compiler.SymbolTableCreation
+namespace COOL_Compiling.SymbolTableCreation
 {
-    public class COOLSymbolTableCreator : COOLBaseListener
+    public partial class COOLCompileListener
     {
-        
-        public Stack<SymbolTable> depthTables;
-        COOLAnalyseListener listener;
-
-        public override void EnterAdd([NotNull] COOLParser.AddContext context)
+        private class COOLSymbolTableCreator : COOLCompileAspectListener
         {
-            if(listener.phase == COOLAnalyseListener.Phase.Building)
-            {
+            public COOLSymbolTableCreator(COOLCompileListener listener) : base(listener) { }
 
-            }
-            else
+            public override void EnterMethod([NotNull] COOLParser.MethodContext context)
             {
-
+                base.EnterMethod(context);
+                if (listener.isScopeRule)
+                {
+                    SymbolTable parent = listener.depthTables.Peek();
+                    SymbolTable child = new SymbolTable("sdfs", 0);
+                    listener.depthTables.Push(child);
+                    parent.childs.Add(child);
+                }
             }
         }
     }

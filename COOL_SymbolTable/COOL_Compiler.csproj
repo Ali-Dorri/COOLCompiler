@@ -51,7 +51,10 @@
     <Compile Include="ANTLR_COOL_Program\COOLLexer.cs" />
     <Compile Include="ANTLR_COOL_Program\COOLListener.cs" />
     <Compile Include="ANTLR_COOL_Program\COOLParser.cs" />
-    <Compile Include="SymbolTableCreation\COOLAnalyseListener.cs" />
+    <Compile Include="FullAccessStack.cs" />
+    <Compile Include="SymbolTableCreation\COOLCompileListener.cs" />
+    <Compile Include="SymbolTableCreation\COOLCompileAspectListener.cs" />
+    <Compile Include="SymbolTableCreation\COOLSemanticErrorChecker.cs" />
     <Compile Include="SymbolTableCreation\COOLSymbolTableCreator.cs" />
     <Compile Include="ANTLR_COOL_Program\COOLVisitor.cs" />
     <Compile Include="Program.cs" />

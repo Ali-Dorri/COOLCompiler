@@ -1,13 +1,14 @@
-﻿using System;
+﻿using ANTLR_COOL_Program;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace COOL_Compiler.SymbolTableCreation
+namespace COOL_Compiling.SymbolTableCreation
 {
-    public class COOLSymbolTableErrorChecker
+    public partial class COOLCompileListener
     {
-
+        private class COOLSymbolTableErrorChecker : COOLCompileAspectListener
+        {
+            public COOLSymbolTableErrorChecker(COOLCompileListener listener) : base(listener) { }
+        }
     }
 }

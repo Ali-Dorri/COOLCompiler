@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace COOL_Compiler.SymbolTableCreation
+namespace COOL_Compiling.SymbolTableCreation
 {
     public class SymbolTable
     {

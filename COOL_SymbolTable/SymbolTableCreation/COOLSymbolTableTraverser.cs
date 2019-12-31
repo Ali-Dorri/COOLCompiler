@@ -3,37 +3,46 @@ using System.Collections.Generic;
 using ANTLR_COOL_Program;
 using Antlr4.Runtime.Misc;
 
-namespace COOL_Compiler.SymbolTableCreation
+namespace COOL_Compiling.SymbolTableCreation
 {
-    class COOLSymbolTableTraverser : COOLBaseListener
+    public partial class COOLCompileListener
     {
-        COOLAnalyseListener listener;
-        Stack<int> traverserChildsCounts = new Stack<int>();
-
-        public override void EnterMethod([NotNull] COOLParser.MethodContext context)
+        private class COOLSymbolTableTraverser : COOLCompileAspectListener
         {
-            //Method is scope rule so enter new scope
-            EnterScope();
+            CustomStack<int> traverserChildsCounts = new CustomStack<int>();
 
-            //context.
+            public COOLSymbolTableTraverser(COOLCompileListener listener) : base(listener) { }
 
-        }
+            public override void EnterMethod([NotNull] COOLParser.MethodContext context)
+            {
+                CheckEnterScope();
+            }
 
-        void EnterScope()
-        {
-            listener.symbolTableCreator.depthTables.Push(listener.symbolTableCreator.depthTables[traverserChildsCounts.Peek()]);
+            public override void ExitMethod([NotNull] COOLParser.MethodContext context)
+            {
+                CheckExitScope();
+            }
 
-            //update parent table traverser childs count
-            int newCount = traverserChildsCounts.Pop() + 1;
-            traverserChildsCounts.Push(newCount);
+            void CheckEnterScope()
+            {
+                if (listener.isScopeRule)
+                {
+                    listener.depthTables.Push(listener.depthTables.Peek().childs[traverserChildsCounts.Peek()]);
+                    //update parent table traverser childs count
+                    traverserChildsCounts[traverserChildsCounts.Count - 1] = traverserChildsCounts.Peek() + 1;
+                    //add child table's traversed childs count
+                    traverserChildsCounts.Push(0);
+                }
+            }
 
-            //add child table's traversed childs count
-            traverserChildsCounts.Push(0);
-        }
-
-        void ExitScope()
-        {
-
+            void CheckExitScope()
+            {
+                if (listener.isScopeRule)
+                {
+                    listener.depthTables.Pop();
+                    traverserChildsCounts.Pop();
+                }
+            }
         }
     }
 }

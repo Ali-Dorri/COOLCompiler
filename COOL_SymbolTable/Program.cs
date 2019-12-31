@@ -3,9 +3,9 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using ANTLR_COOL_Program;
 using System.IO;
-using COOL_Compiler.SymbolTableCreation;
+using COOL_Compiling.SymbolTableCreation;
 
-namespace COOL_Compiler
+namespace COOL_Compiling
 {
     class Program
     {
@@ -18,13 +18,13 @@ namespace COOL_Compiler
             IParseTree parseTree = parser.program();
 
             ParseTreeWalker walker = new ParseTreeWalker();
-            COOLAnalyseListener coolListener = new COOLAnalyseListener();
+            COOLCompileListener coolListener = new COOLCompileListener();
             //symbol tables building phase
-            coolListener.phase = COOLAnalyseListener.Phase.Building;
+            coolListener.phase = COOLCompileListener.Phase.Building;
             Console.WriteLine("Symbol Table Building Phase:============================================");
             walker.Walk(coolListener, parseTree);
             //symbol tables checking phase
-            coolListener.phase = COOLAnalyseListener.Phase.Checking;
+            coolListener.phase = COOLCompileListener.Phase.Checking;
             Console.WriteLine("Symbol Table Checking Phase:============================================");
             walker.Walk(coolListener, parseTree);
 
