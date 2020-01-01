@@ -9,13 +9,12 @@ namespace COOL_Compiling.SymbolTableCreation
     public class SymbolTable
     {
         public readonly string id;
-        public readonly HashSet<Symbol> entries;
+        public readonly HashSet<Symbol> entries = new HashSet<Symbol>();
         public readonly List<SymbolTable> childs = new List<SymbolTable>();
 
-        public SymbolTable(string id, int symbolCount)
+        public SymbolTable(string id)
         {
             this.id = id;
-            entries = new HashSet<Symbol>(symbolCount);
         }
     }
 
@@ -26,6 +25,15 @@ namespace COOL_Compiling.SymbolTableCreation
     {
         public readonly string id;
         public abstract SymbolKind Kind { get; }
+        /// <summary>
+        /// Is it defined in it's symbol table's corresponding scope?
+        /// </summary>
+        public bool isDefined = false;
+        /// <summary>
+        /// Is it used in it's symbol table's corresponding scope?
+        /// </summary>
+        public bool isUsed = false;
+
         public Symbol(string id)
         {
             this.id = id;
@@ -35,8 +43,11 @@ namespace COOL_Compiling.SymbolTableCreation
     public class ClassSymbol : Symbol
     {
         public override SymbolKind Kind => SymbolKind.Class;
-        public ClassSymbol(string id) : base(id)
+        public ClassSymbol baseClass = null;
+
+        public ClassSymbol(string id, ClassSymbol baseClass) : base(id)
         {
+            this.baseClass = baseClass;
         }
     }
 
@@ -77,11 +88,18 @@ namespace COOL_Compiling.SymbolTableCreation
     {
         public override SymbolKind Kind => SymbolKind.Property;
         public readonly SymbolType returnType;
+        public readonly string customTypeID;
         //Properties: nothing for now
 
         public PropertySymbol(string id, SymbolType returnType) : base(id)
         {
             this.returnType = returnType;
+        }
+
+        public PropertySymbol(string id, string customTypeID) : base(id)
+        {
+            returnType = SymbolType.CustomType;
+            this.customTypeID = customTypeID;
         }
     }
 }

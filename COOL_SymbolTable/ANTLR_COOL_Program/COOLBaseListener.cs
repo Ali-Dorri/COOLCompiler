@@ -35,12 +35,14 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.7.2")]
 [System.CLSCompliant(false)]
 public partial class COOLBaseListener : ICOOLListener {
+        //TODO remove all Console.WriteLine() methods
+
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="COOLParser.program"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterProgram([NotNull] COOLParser.ProgramContext context) { System.Console.WriteLine("enter program"); }
+	public virtual void EnterProgram([NotNull] COOLParser.ProgramContext context) { }
 	/// <summary>
 	/// Exit a parse tree produced by <see cref="COOLParser.program"/>.
 	/// <para>The default implementation does nothing.</para>

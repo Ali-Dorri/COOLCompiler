@@ -18,7 +18,7 @@ namespace COOL_Compiling
             IParseTree parseTree = parser.program();
 
             ParseTreeWalker walker = new ParseTreeWalker();
-            COOLCompileListener coolListener = new COOLCompileListener();
+            COOLCompileListener coolListener = new COOLCompileListener() { logProcess = false };
             //symbol tables building phase
             coolListener.phase = COOLCompileListener.Phase.Building;
             Console.WriteLine("Symbol Table Building Phase:============================================");
